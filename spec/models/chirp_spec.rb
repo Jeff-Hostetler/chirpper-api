@@ -24,4 +24,25 @@ describe Chirp do
       expect(described_class.default_order).to eq([first_to_return, second_to_return])
     end
   end
+
+  describe ".popular" do
+    it "returns chirps ordered by upvotes that were created in the last day" do
+      most_popular = create(:chirp, upvotes: 10, created_at: 23.hours.ago)
+      not_as_popular = create(:chirp, upvotes: 9, created_at: 22.hours.ago)
+      create(:chirp, upvotes: 900, created_at: 25.hours.ago)
+
+      expect(described_class.popular).to eq([most_popular, not_as_popular])
+    end
+  end
+
+  describe "#upvote" do
+    it "increments the upvotes by 1" do
+      chirp = create(:chirp)
+      expect(chirp.reload.upvotes).to eq(0)
+
+      chirp.upvote
+
+      expect(chirp.reload.upvotes).to eq(1)
+    end
+  end
 end

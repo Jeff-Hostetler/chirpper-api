@@ -1,7 +1,12 @@
 class Chirp < ApplicationRecord
   scope :default_order, -> { order(created_at: :desc) }
+  scope :popular, -> {where("created_at > ?", 24.hours.ago).order(upvotes: :desc)}
 
   validate :correct_length
+
+  def upvote
+    self.update_attributes!(upvotes: upvotes + 1)
+  end
 
   private
 

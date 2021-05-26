@@ -1,3 +1,3 @@
 class ChirpSerializer < ActiveModel::Serializer
-  attributes(:id, :text)
+  attributes(:id, :text, :upvotes)
 end
