@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :chirpper do
     namespace :v1 do
-      resources :chirps, only: [:index], via: :options
+      resources :chirps, only: [:index, :create], via: :options
     end
   end
 
