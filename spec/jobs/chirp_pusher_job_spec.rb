@@ -1,6 +1,4 @@
 require 'rails_helper'
-require 'webmock/rspec'
-WebMock.disable_net_connect!(allow_localhost: true)
 
 describe ChirpPusherJob, type: :job do
   describe "perform" do

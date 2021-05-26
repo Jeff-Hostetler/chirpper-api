@@ -27,6 +27,9 @@ describe "Chirps API" do
 
   describe "POST /chirps" do
     it "creates a new chirp" do
+      stub_request(:post, "https://bellbird.joinhandshake-internal.com/push/").
+        to_return(status: 200, body: "", headers: {})
+
       post("/chirpper/v1/chirps", params: {text: "test chirp"})
 
       expect(response.status).to eq(201)
@@ -35,6 +38,9 @@ describe "Chirps API" do
       expect(chirp_response.keys).to eq(chirp_keys)
       expect(chirp_response[:text]).to eq("test chirp")
       expect(chirp_response[:id]).to be_present
+      expect(
+        a_request(:post, "https://bellbird.joinhandshake-internal.com/push/")
+      ).to have_been_made
     end
   end
 
