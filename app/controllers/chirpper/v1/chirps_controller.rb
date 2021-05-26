@@ -4,7 +4,7 @@ module Chirpper
 
       def index
         chirps = ActiveModel::Serializer::CollectionSerializer.new(
-          Chirp.all, each_serializer: ChirpSerializer
+          Chirp.default_order, each_serializer: ChirpSerializer
         )
         render json: {chirps: chirps}
       end

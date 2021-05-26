@@ -5,14 +5,14 @@ describe "Chirps API" do
 
   describe "GET /chirps" do
     it "returns the chirps" do
-      first_chirp = create(:chirp, text: "First chirp")
-      second_chirp = create(:chirp)
+      first_chirp = create(:chirp, text: "First chirp", created_at: 2.minutes.ago)
+      second_chirp = create(:chirp, created_at: 1.minute.ago)
 
       get("/chirpper/v1/chirps")
 
       expect(response.status).to eq(200)
       chirps_response = JSON.parse(response.body, symbolize_names: true)[:chirps]
-      expect(chirps_response.map {|chirp| chirp[:id]}).to match_array([first_chirp.id, second_chirp.id])
+      expect(chirps_response.map {|chirp| chirp[:id]}).to eq([second_chirp.id, first_chirp.id])
       first_chirp_response = chirps_response.find {|chirp| chirp[:id] == first_chirp.id}
       expect(first_chirp_response.keys).to eq(chirp_keys)
       expect(first_chirp_response[:text]).to eq("First chirp")

@@ -1,6 +1,7 @@
 class Chirp < ApplicationRecord
-  validate :correct_length
+  scope :default_order, -> { order(created_at: :desc) }
 
+  validate :correct_length
 
   private
 

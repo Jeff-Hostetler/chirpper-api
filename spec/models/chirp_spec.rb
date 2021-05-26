@@ -15,4 +15,13 @@ describe Chirp do
       expect(too_long_chirp.valid?).to eq(true)
     end
   end
+
+  describe ".default_order" do
+    it "returns chirps with most recently created on the top" do
+      second_to_return = create(:chirp, created_at: 2.minutes.ago)
+      first_to_return = create(:chirp, created_at: 1.minute.ago)
+
+      expect(described_class.default_order).to eq([first_to_return, second_to_return])
+    end
+  end
 end
